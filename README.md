@@ -13,11 +13,15 @@
 
 ## Providers
 
-No provider.
+| Name | Version |
+|------|---------|
+| aws | n/a |
 
 ## Inputs
 
-No input.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| domain | The domain name to assign to SES | `string` | n/a | yes |
 
 ## Outputs
 
