@@ -28,6 +28,14 @@ resource "aws_route53_record" "amazonses_dkim_record" {
   records = ["${aws_ses_domain_dkim.ses_domain_dkim.dkim_tokens[count.index]}.dkim.amazonses.com"]
 }
 
+resource "aws_route53_record" "ses_domain_mail_from_mx" {
+  zone_id = data.aws_route53_zone.main.zone_id
+  name    = aws_ses_domain_mail_from.ses_domain_mail_from.mail_from_domain
+  type    = "MX"
+  ttl     = "600"
+  records = ["10 feedback-smtp.${data.aws_region.current.name}.amazonses.com"]
+}
+
 resource "aws_route53_record" "ses_domain_mail_from_txt" {
   zone_id = data.aws_route53_zone.main.zone_id
   name    = aws_ses_domain_mail_from.ses_domain_mail_from.mail_from_domain
