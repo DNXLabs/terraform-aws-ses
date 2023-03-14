@@ -21,6 +21,9 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| create\_amazonses\_verification\_record | Create route 53 verification record for ses | `bool` | `false` | no |
+| create\_domain\_mail\_from\_mx | Create route53 MX record | `bool` | `false` | no |
+| create\_domain\_mail\_from\_txt | Create route 53 TXT record | `bool` | `false` | no |
 | domain | The domain name to assign to SES | `string` | n/a | yes |
 
 ## Outputs
