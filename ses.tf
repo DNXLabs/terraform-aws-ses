@@ -12,6 +12,7 @@ resource "aws_ses_domain_dkim" "ses_domain_dkim" {
 }
 
 resource "aws_route53_record" "amazonses_verification_record" {
+  count   = (var.create_amazonses_verification_record ? 1 : 0)
   zone_id = data.aws_route53_zone.main.zone_id
   name    = "_amazonses.${var.domain}"
   type    = "TXT"
@@ -29,6 +30,7 @@ resource "aws_route53_record" "amazonses_dkim_record" {
 }
 
 resource "aws_route53_record" "ses_domain_mail_from_mx" {
+  count   = (var.create_domain_mail_from_mx ? 1 : 0)
   zone_id = data.aws_route53_zone.main.zone_id
   name    = aws_ses_domain_mail_from.ses_domain_mail_from.mail_from_domain
   type    = "MX"
@@ -37,9 +39,11 @@ resource "aws_route53_record" "ses_domain_mail_from_mx" {
 }
 
 resource "aws_route53_record" "ses_domain_mail_from_txt" {
+  count   = (var.create_domain_mail_from_txt ? 1 : 0)
   zone_id = data.aws_route53_zone.main.zone_id
   name    = aws_ses_domain_mail_from.ses_domain_mail_from.mail_from_domain
   type    = "TXT"
   ttl     = "600"
-  records = ["v=spf1 include:amazonses.com -all"]
+  records = ["v=spf1 include:amazonses.com ~all"]
 }
+
