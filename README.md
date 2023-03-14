@@ -1,7 +1,7 @@
-# terraform-aws-template
+# terraform-aws-ses
 
-[![Lint Status](https://github.com/DNXLabs/terraform-aws-template/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-template/actions)
-[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-template)](https://github.com/DNXLabs/terraform-aws-template/blob/master/LICENSE)
+[![Lint Status](https://github.com/DNXLabs/terraform-aws-ses/workflows/Lint/badge.svg)](https://github.com/DNXLabs/terraform-aws-ses/actions)
+[![LICENSE](https://img.shields.io/github/license/DNXLabs/terraform-aws-ses)](https://github.com/DNXLabs/terraform-aws-ses/blob/master/LICENSE)
 
 <!--- BEGIN_TF_DOCS --->
 
