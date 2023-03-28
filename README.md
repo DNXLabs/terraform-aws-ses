@@ -22,13 +22,20 @@
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | create\_amazonses\_verification\_record | Create route 53 verification record for ses | `bool` | `false` | no |
+| create\_domain\_mail\_from | Messages sent through Amazon SES will be marked as originating from your domain instead of a subdomain of amazon.com. | `bool` | `true` | no |
 | create\_domain\_mail\_from\_mx | Create route53 MX record | `bool` | `false` | no |
 | create\_domain\_mail\_from\_txt | Create route 53 TXT record | `bool` | `false` | no |
 | domain | The domain name to assign to SES | `string` | n/a | yes |
+| is\_route53 | Enable or disable route53 zone retriever | `bool` | `true` | no |
 
 ## Outputs
 
-No output.
+| Name | Description |
+|------|-------------|
+| amazonses\_dkim\_record | n/a |
+| amazonses\_verification\_record | n/a |
+| ses\_domain\_mail\_from\_mx | n/a |
+| ses\_domain\_mail\_from\_txt | n/a |
 
 <!--- END_TF_DOCS --->
 
