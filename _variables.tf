@@ -3,6 +3,12 @@ variable "domain" {
   description = "The domain name to assign to SES"
 }
 
+variable "email_identities" {
+  type        = list(string)
+  description = ""
+  default     = []
+}
+
 variable "create_domain_mail_from" {
   type        = bool
   description = "Messages sent through Amazon SES will be marked as originating from your domain instead of a subdomain of amazon.com."
@@ -27,8 +33,17 @@ variable "create_amazonses_verification_record" {
   default     = false
 }
 
-variable  "is_route53" {
+variable "is_route53" {
   type        = bool
   description = "Enable or disable route53 zone retriever"
   default     = true
+}
+
+variable "configuration_sets" {
+  type = list(object({
+    name            = string
+    redirect_domain = string
+  }))
+  description = ""
+  default     = []
 }

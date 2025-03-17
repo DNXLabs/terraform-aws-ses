@@ -2,14 +2,19 @@ resource "aws_ses_domain_identity" "ses_domain" {
   domain = var.domain
 }
 
+resource "aws_ses_email_identity" "default" {
+  for_each = toset(var.email_identities)
+  email    = each.key
+}
+
 resource "aws_ses_domain_mail_from" "ses_domain_mail_from" {
-  count = var.create_domain_mail_from ? 1: 0
+  count            = var.create_domain_mail_from ? 1 : 0
   domain           = aws_ses_domain_identity.ses_domain.domain
   mail_from_domain = "mail.${aws_ses_domain_identity.ses_domain.domain}"
 }
 
 resource "aws_ses_domain_dkim" "ses_domain_dkim" {
-  domain = join("", aws_ses_domain_identity.ses_domain.*.domain)
+  domain = join("", aws_ses_domain_identity.ses_domain[*].domain)
 }
 
 resource "aws_route53_record" "amazonses_verification_record" {
@@ -18,7 +23,7 @@ resource "aws_route53_record" "amazonses_verification_record" {
   name    = "_amazonses.${var.domain}"
   type    = "TXT"
   ttl     = "600"
-  records = [join("", aws_ses_domain_identity.ses_domain.*.verification_token)]
+  records = [join("", aws_ses_domain_identity.ses_domain[*].verification_token)]
 }
 
 resource "aws_route53_record" "amazonses_dkim_record" {
