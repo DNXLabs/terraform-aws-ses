@@ -44,8 +44,9 @@ variable "configuration_sets" {
     name            = string
     redirect_domain = string
   }))
-  description = ""
+  description = "Configuration Sets for SES"
   default     = []
+  # TO-DO: Add validation for delivery_options.tls_policy. Can be Optional or Require
 }
 
 variable "event_destinations" {
@@ -56,8 +57,9 @@ variable "event_destinations" {
     matching_types         = list(string)
     sns_destination        = optional(any, [])
   }))
-  description = "value"
+  description = "Event destinations for SES"
   default     = []
+
   validation {
     error_message = "Invalid value for matching_types. Should be one of: send, reject, bounce, complaint, delivery, open, click or renderingFailure"
     condition = alltrue([
@@ -69,7 +71,35 @@ variable "event_destinations" {
   validation {
     error_message = "Invalid configuration_set_name."
     condition = alltrue([
-      for event in var.event_destinations : contains(flatten([for config_set in var.configuration_sets: config_set.name]), event.configuration_set_name)
+      for event in var.event_destinations : contains(flatten([for config_set in var.configuration_sets : config_set.name]), event.configuration_set_name)
     ])
   }
+}
+
+variable "receipt_rule_sets" {
+  type    = list(string)
+  default = []
+}
+
+variable "receipt_rules" {
+  type = list(object({
+    name          = string
+    rule_set_name = string
+    enabled       = bool
+    recipients    = list(string)
+    lambda_actions = optional(list(object({
+      function_arn    = string
+      position        = number
+      invocation_type = string
+    })), [])
+    s3_actions = optional(list(object({
+      position    = number
+      bucket_name = string
+    })), [])
+    stop_actions = optional(list(object({
+      position = number
+      scope    = string
+    })), [])
+  }))
+  default = []
 }
