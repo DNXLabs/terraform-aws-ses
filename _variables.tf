@@ -47,3 +47,29 @@ variable "configuration_sets" {
   description = ""
   default     = []
 }
+
+variable "event_destinations" {
+  type = list(object({
+    name                   = string
+    configuration_set_name = string
+    enabled                = optional(bool, true)
+    matching_types         = list(string)
+    sns_destination        = optional(any, [])
+  }))
+  description = "value"
+  default     = []
+  validation {
+    error_message = "Invalid value for matching_types. Should be one of: send, reject, bounce, complaint, delivery, open, click or renderingFailure"
+    condition = alltrue([
+      for event in var.event_destinations : alltrue([
+        for type in event.matching_types : contains(local.valid_matching_types, type)
+      ])
+    ])
+  }
+  validation {
+    error_message = "Invalid configuration_set_name."
+    condition = alltrue([
+      for event in var.event_destinations : contains(flatten([for config_set in var.configuration_sets: config_set.name]), event.configuration_set_name)
+    ])
+  }
+}

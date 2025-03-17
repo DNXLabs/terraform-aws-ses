@@ -1,5 +1,5 @@
 output "amazonses_dkim_record" {
-#   value = join("", aws_ses_domain_dkim.ses_domain_dkim.dkim_tokens) + ".dkim.amazonses.com"
+  #   value = join("", aws_ses_domain_dkim.ses_domain_dkim.dkim_tokens) + ".dkim.amazonses.com"
   value = aws_ses_domain_dkim.ses_domain_dkim
 }
 
