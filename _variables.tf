@@ -102,4 +102,5 @@ variable "receipt_rules" {
     })), [])
   }))
   default = []
+  # TO-DO: Add validation if rule_set_name exists
 }

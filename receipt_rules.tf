@@ -10,6 +10,7 @@ resource "aws_ses_receipt_rule" "lambda_rule" {
   enabled       = each.value.enabled
   recipients    = each.value.recipients
   scan_enabled  = true
+
   dynamic "lambda_action" {
     for_each = each.value.lambda_actions
     content {
