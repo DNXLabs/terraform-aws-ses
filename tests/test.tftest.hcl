@@ -4,14 +4,14 @@ mock_provider "aws" {}
 run "valid_required_vars" {
   command = plan
   variables {
-    domain_identities = [{domain = "dnxlabs.com"}]
+    domain_identities = [{ domain = "dnxlabs.com" }]
   }
 }
 
 run "should_fail_if_invalid_matching_type_on_event_destinations" {
   command = plan
   variables {
-    domain_identities = [{domain = "dnxlabs.com"}]
+    domain_identities = [{ domain = "dnxlabs.com" }]
     configuration_sets = [{
       name            = "test_configuration_set"
       redirect_domain = "test.dnxlabs.com"
@@ -30,7 +30,7 @@ run "should_fail_if_invalid_matching_type_on_event_destinations" {
 run "should_fail_if_invalid_configuration_set_name_on_event_destinations" {
   command = plan
   variables {
-    domain_identities = [{domain = "dnxlabs.com"}]
+    domain_identities = [{ domain = "dnxlabs.com" }]
     configuration_sets = [{
       name            = "test_configuration_set"
       redirect_domain = "test.dnxlabs.com"
@@ -48,7 +48,7 @@ run "should_fail_if_invalid_configuration_set_name_on_event_destinations" {
 run "should_succeed_if_all_valid_vars" {
   command = plan
   variables {
-    domain_identities = [{domain = "dnxlabs.com"}]
+    domain_identities = [{ domain = "dnxlabs.com" }]
     configuration_sets = [{
       name            = "test_configuration_set"
       redirect_domain = "test.dnxlabs.com"
