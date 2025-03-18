@@ -23,3 +23,4 @@ jobs:
         tf_docs_output_method: inject
         tf_docs_git_push: 'true'
         tf_docs_git_commit_message: 'terraform-docs: automated update action'
+
