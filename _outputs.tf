@@ -3,7 +3,7 @@ output "amazonses_dkim_record" {
 }
 
 output "amazonses_verification_record" {
-  value = join("", aws_ses_domain_identity.ses_domain[*].verification_token)
+  value = aws_ses_domain_identity.ses_domain[*]
 }
 
 output "ses_domain_mail_from_mx" {

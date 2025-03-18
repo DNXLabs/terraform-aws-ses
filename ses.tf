@@ -19,7 +19,7 @@ resource "aws_ses_domain_mail_from" "ses_domain_mail_from" {
 
 resource "aws_ses_domain_dkim" "ses_domain_dkim" {
   for_each = { for domain in var.domain_identities : domain.domain => domain }
-  domain   = join("", aws_ses_domain_identity.ses_domain[each.key].domain)
+  domain   = aws_ses_domain_identity.ses_domain[each.key].domain
 }
 
 resource "aws_route53_record" "verification_record" {
@@ -31,7 +31,7 @@ resource "aws_route53_record" "verification_record" {
   name    = "_amazonses.${each.key}"
   type    = "TXT"
   ttl     = "600"
-  records = [join("", aws_ses_domain_identity.ses_domain[each.key].verification_token)]
+  records = [aws_ses_domain_identity.ses_domain[each.key].verification_token]
 }
 
 resource "aws_route53_record" "amazonses_dkim_record" {
