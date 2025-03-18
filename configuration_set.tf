@@ -10,4 +10,3 @@ resource "aws_ses_configuration_set" "default" {
     custom_redirect_domain = each.value.redirect_domain
   }
 }
-
