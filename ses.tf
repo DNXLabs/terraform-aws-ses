@@ -35,22 +35,19 @@ resource "aws_route53_record" "verification_record" {
 }
 
 resource "aws_route53_record" "amazonses_dkim_record" {
-  # count = toset(flatten([
-  #   for domain in var.domain_identities : aws_ses_domain_dkim.ses_domain_dkim[each.key].tokens
-  # ]))
-  for_each = toset(flatten([
-    for domain in var.domain_identities : aws_ses_domain_dkim.ses_domain_dkim[each.key].tokens
-  ]))
+  for_each = { for token in flatten([
+    for domain in var.domain_identities : [
+      { name : "${domain.domain}", index : 0 },
+      { name : "${domain.domain}", index : 1 },
+      { name : "${domain.domain}", index : 2 },
+    ]
+  ]) : "${token.name}-${token.index}" => token }
 
-  # for_each = {
-  #   for domain in var.domain_identities : domain.domain => domain
-  #   if domain.is_route53
-  # }
-  zone_id = data.aws_route53_zone.main[each.key].zone_id
-  name    = "${each.key}._domainkey"
+  zone_id = data.aws_route53_zone.main[each.value.name].zone_id
+  name    = "${aws_ses_domain_dkim.ses_domain_dkim[each.value.name].dkim_tokens[each.value.index]}._domainkey"
   type    = "CNAME"
   ttl     = "600"
-  records = ["${each.key}.dkim.amazonses.com"]
+  records = ["${aws_ses_domain_dkim.ses_domain_dkim[each.value.name].dkim_tokens[each.value.index]}.dkim.amazonses.com"]
 }
 
 resource "aws_route53_record" "ses_domain_mail_from_mx" {
