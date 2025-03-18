@@ -35,7 +35,10 @@ resource "aws_route53_record" "verification_record" {
 }
 
 resource "aws_route53_record" "amazonses_dkim_record" {
-  count = toset(flatten([
+  # count = toset(flatten([
+  #   for domain in var.domain_identities : aws_ses_domain_dkim.ses_domain_dkim[each.key].tokens
+  # ]))
+  for_each = toset(flatten([
     for domain in var.domain_identities : aws_ses_domain_dkim.ses_domain_dkim[each.key].tokens
   ]))
 
