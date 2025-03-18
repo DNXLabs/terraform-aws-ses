@@ -4,7 +4,7 @@ resource "aws_ses_configuration_set" "default" {
   reputation_metrics_enabled = false
   sending_enabled            = true
   delivery_options {
-    tls_policy = "Required"
+    tls_policy = "Require"
   }
   tracking_options {
     custom_redirect_domain = each.value.redirect_domain
