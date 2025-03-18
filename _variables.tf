@@ -16,12 +16,6 @@ variable "email_identities" {
   default     = []
 }
 
-variable "create_domain_mail_from" {
-  type        = bool
-  description = "Messages sent through Amazon SES will be marked as originating from your domain instead of a subdomain of amazon.com."
-  default     = true
-}
-
 variable "is_route53" {
   type        = bool
   description = "Enable or disable route53 zone retriever"
