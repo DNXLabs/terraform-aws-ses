@@ -16,12 +16,6 @@ variable "email_identities" {
   default     = []
 }
 
-variable "is_route53" {
-  type        = bool
-  description = "Enable or disable route53 zone retriever"
-  default     = true
-}
-
 variable "configuration_sets" {
   type = list(object({
     name            = string
