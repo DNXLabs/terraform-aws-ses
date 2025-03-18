@@ -1,5 +1,12 @@
-variable "domain" {
-  type        = string
+variable "domain_identities" {
+  type = list(object({
+    domain                      = string
+    is_route53                  = optional(bool, true)
+    create_domain_mail_from     = optional(bool, true)
+    create_verification_record  = optional(bool, true)
+    create_domain_mail_from_mx  = optional(bool, true)
+    create_domain_mail_from_txt = optional(bool, true)
+  }))
   description = "The domain name to assign to SES"
 }
 
@@ -13,24 +20,6 @@ variable "create_domain_mail_from" {
   type        = bool
   description = "Messages sent through Amazon SES will be marked as originating from your domain instead of a subdomain of amazon.com."
   default     = true
-}
-
-variable "create_domain_mail_from_mx" {
-  type        = bool
-  description = "Create route53 MX record"
-  default     = false
-}
-
-variable "create_domain_mail_from_txt" {
-  type        = bool
-  description = "Create route 53 TXT record"
-  default     = false
-}
-
-variable "create_amazonses_verification_record" {
-  type        = bool
-  description = "Create route 53 verification record for ses"
-  default     = false
 }
 
 variable "is_route53" {
