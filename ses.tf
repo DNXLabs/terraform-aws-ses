@@ -37,9 +37,9 @@ resource "aws_route53_record" "verification_record" {
 resource "aws_route53_record" "amazonses_dkim_record" {
   for_each = { for token in flatten([
     for domain in var.domain_identities : [
-      { name : "${domain.domain}", index : 0 },
-      { name : "${domain.domain}", index : 1 },
-      { name : "${domain.domain}", index : 2 },
+      { name : domain.domain, index : 0 },
+      { name : domain.domain, index : 1 },
+      { name : domain.domain, index : 2 },
     ]
   ]) : "${token.name}-${token.index}" => token }
 
